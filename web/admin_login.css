@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: rgb(117, 119, 125);
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
+.title_logregister {
+    color: rgb(0, 0, 0);
+    margin-bottom: 1rem;
+}
+
+.logregister {
+    background-color: rgb(237, 226, 13);
+    padding: 2rem;
+    border-radius: 8px;
+    background: #d8d80c;
+    border-radius: 5px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+.input-box.invalid input {
+    border-color: red;
+}
+
+
+
+
+.hidden {
+    display: none;
+}
+
+.input-box{
+    border: 1px solid black;
+    background: #fff;
+}
+
+.input-box  img{
+    width: 20px;
+    cursor: pointer;
+}
+
+.input-pass{
+    padding: 0.75rem;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    color: rgb(0, 0, 0);
+    margin-bottom: 0.5rem;
+}
+
+.input-group input {
+    padding: 0.75rem;
+    border: 1px solid #00000000;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+
+.buttonlogin {
+    padding: 0.75rem;
+    font-size: 1rem;
+    color: #000000;
+}
+
+.forgot-password{
+    padding-right: 2rem;
+}
+
+.back{
+    padding-left:5rem;
+}
+
+.show-password-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 5px;
+}
+
+.buttonlogin:hover{
+    background-color: aqua;
+}
+
+

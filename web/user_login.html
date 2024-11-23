@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin page</title>
+    <link rel="stylesheet" href="admin_login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="title_logregister">User Login Form</h1>
+        <div class="logregister">
+            <form action="login.php" class="text_logregister">
+                <div class="input-group">
+                    <label for="admin_name_login">User Name:</label>
+                    <input type="text" id="admin_name_login" name="admin_name" required>
+                </div>
+                <div class="input-group">
+                    <label for="admin_password_login">Password:</label>
+                    <input type="password" id="admin_password_login" name="admin_password" required>
+                </div>
+                <button type="submit" class="buttonlogin">Log In</button><br><br>
+            </form>
+            <div class="extra-links">
+                <a href="#" class="forgot-password">Forgot Password</a>
+                <a href="#" class="register">Register</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
