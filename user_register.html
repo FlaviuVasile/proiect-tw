@@ -3,27 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>User Register Page</title>
     <link rel="stylesheet" href="admin_login.css">
 </head>
 <body>
     <div class="login-container">
-        <h1 class="title_logregister">Login</h1>
+        <h1 class="title_logregister">User Register Form</h1>
         <div class="logregister">
-            <form action="login.php" method="post" class="text_logregister">
+            <form action="register.php" method="post" class="text_logregister">
                 <div class="input-group">
-                    <label for="username">Username or Email:</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
-                <button type="submit" class="buttonlogin">Log In</button>
+                <button type="submit" class="buttonlogin">Register</button><br><br>
             </form>
             <div class="extra-links">
-                <a href="#" class="forgot-password">Forgot Password?</a>
-                <a href="#" class="register">Register</a>
+                <a href="/forgot-password" class="forgot-password">Forgot Password</a>
+                <a href="/login" class="register">Login</a>
             </div>
         </div>
     </div>
