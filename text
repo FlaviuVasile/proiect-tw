@@ -1,0 +1,128 @@
+configuare 
+
+$host = 'localhost';
+$dbname = 'conference_db';
+$username = 'root'; // Schimbă dacă e diferit
+$password = ''; // Adaugă parola dacă există
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Conexiunea la baza de date a eșuat: " . $e->getMessage());
+}
+
+
+/2. Adăugarea unui utilizator (fișier: register_user.php)
+php
+Copiază codul
+<?php
+require 'db_config.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $password = password_hash(trim($_POST['password']), PASSWORD_BCRYPT);
+    $role = $_POST['role'];
+
+    try {
+        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$name, $email, $password, $role]);
+        echo "Utilizator adăugat cu succes!";
+    } catch (PDOException $e) {
+        echo "Eroare: " . $e->getMessage();
+    }
+}
+?>
+<form method="POST">
+    <input type="text" name="name" placeholder="Nume" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Parolă" required>
+    <select name="role">
+        <option value="organizer">Organizator</option>
+        <option value="participant">Participant</option>
+    </select>
+    <button type="submit">Înregistrează</button>
+</form>
+
+
+3. Crearea unei conferințe (fișier: create_conference.php)
+
+php
+Copiază codul
+<?php
+require 'db_config.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = trim($_POST['name']);
+    $description = trim($_POST['description']);
+    $start_time = $_POST['start_time'];
+    $end_time = $_POST['end_time'];
+    $location = trim($_POST['location']);
+    $organizer_id = $_POST['organizer_id'];
+
+    try {
+        $stmt = $pdo->prepare("INSERT INTO conferences (name, description, start_time, end_time, location, organizer_id) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $description, $start_time, $end_time, $location, $organizer_id]);
+        echo "Conferința a fost creată cu succes!";
+    } catch (PDOException $e) {
+        echo "Eroare: " . $e->getMessage();
+    }
+}
+?>
+<form method="POST">
+    <input type="text" name="name" placeholder="Numele conferinței" required>
+    <textarea name="description" placeholder="Descrierea conferinței" required></textarea>
+    <input type="datetime-local" name="start_time" required>
+    <input type="datetime-local" name="end_time" required>
+    <input type="text" name="location" placeholder="Locație" required>
+    <input type="number" name="organizer_id" placeholder="ID Organizator" required>
+    <button type="submit">Creează conferința</button>
+</form>
+
+
+4. Înscrierea participanților la conferințe (fișier: register_participant.php)
+
+
+php
+Copiază codul
+<?php
+require 'db_config.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_id = $_POST['user_id'];
+    $conference_id = $_POST['conference_id'];
+
+    try {
+        $stmt = $pdo->prepare("INSERT INTO participants (user_id, conference_id) VALUES (?, ?)");
+        $stmt->execute([$user_id, $conference_id]);
+        echo "Participant înscris cu succes!";
+    } catch (PDOException $e) {
+        echo "Eroare: " . $e->getMessage();
+    }
+}
+?>
+<form method="POST">
+    <input type="number" name="user_id" placeholder="ID Utilizator" required>
+    <input type="number" name="conference_id" placeholder="ID Conferință" required>
+    <button type="submit">Înregistrează participant</button>
+</form>
+
+
+5. Validarea suprapunerii orare (în create_conference.php)
+Înainte de a adăuga conferința, verificăm dacă există suprapuneri:
+
+php
+Copiază codul
+$stmt = $pdo->prepare("
+    SELECT COUNT(*) 
+    FROM conferences 
+    WHERE location = ? 
+      AND (start_time < ? AND end_time > ?)
+");
+$stmt->execute([$location, $end_time, $start_time]);
+if ($stmt->fetchColumn() > 0) {
+    echo "Eroare: Există deja o conferință programată în această locație și interval orar.";
+} else {
+    // Cod pentru a adăuga conferința
+}
